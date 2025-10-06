@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Underwater Images</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #001f3f, #0074D9);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .img-card {
+            background: #fff;
+            color: #000;
+            border-radius: 10px;
+            padding: 10px;
+            width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .img-card:hover {
+            transform: scale(1.03);
+        }
+
+        img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 70%;
+            background: #ffffff;
+            color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background: #0074D9;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        button {
+            background-color: #00bfff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0074D9;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            flex-direction: column;
+        }
+
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #00bfff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading-overlay" id="loading">
+        <div class="loader"></div>
+        Processing image enhancement... Please wait
+    </div>
+
+    <h1>Enhanced Underwater Images</h1>
+
+    <div class="gallery" id="gallery">
+        <div class="img-card">
+            <h3>Original Image</h3>
+            <img src="{{ url_for('static', filename='results/' + original) }}" alt="Original Image">
+        </div>
+        <div class="img-card">
+            <h3>Histogram Equalized</h3>
+            <img src="{{ url_for('static', filename='results/' + hist) }}" alt="Histogram Equalized">
+        </div>
+        <div class="img-card">
+            <h3>CLAHE Enhanced</h3>
+            <img src="{{ url_for('static', filename='results/' + clahe) }}" alt="CLAHE Enhanced">
+        </div>
+        <div class="img-card">
+            <h3>Deep Learning (CNN/GAN Simulated)</h3>
+            <img src="{{ url_for('static', filename='results/' + deep) }}" alt="Deep Learning Enhanced">
+        </div>
+    </div>
+
+    <h2 style="margin-top: 40px;">Image Quality Comparison</h2>
+    <table id="metrics">
+        <tr>
+            <th>Technique</th>
+            <th>PSNR</th>
+            <th>SSIM</th>
+        </tr>
+        <tr><td>Histogram Equalization</td><td>{{ psnr_hist }}</td><td>{{ ssim_hist }}</td></tr>
+        <tr><td>CLAHE</td><td>{{ psnr_clahe }}</td><td>{{ ssim_clahe }}</td></tr>
+        <tr><td>Deep Learning (CNN/GAN)</td><td>{{ psnr_deep }}</td><td>{{ ssim_deep }}</td></tr>
+    </table>
+
+    <a href="/"><button>← Upload Another Image</button></a>
+
+    <script>
+        // Simulate loading for 2.5 seconds
+        window.addEventListener("load", function() {
+            setTimeout(() => {
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("gallery").style.opacity = "1";
+                document.getElementById("metrics").style.opacity = "1";
+            }, 2500);
+        });
+    </script>
+</body>
+</html>

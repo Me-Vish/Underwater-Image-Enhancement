@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌊 Underwater Image Enhancement 🐠</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #001f3f, #006994, #00d4ff);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            color: #e0f7ff;
+        }
+
+        .upload-box {
+            background: rgba(255, 255, 255, 0.95);
+            color: #000;
+            border-radius: 20px;
+            padding: 50px 30px;
+            max-width: 450px;
+            margin: auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-box:hover {
+            transform: translateY(-5px);
+        }
+
+        input[type="file"] {
+            margin-top: 15px;
+            padding: 10px;
+            width: 95%;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #00bfff;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0074D9;
+        }
+
+        /* Floating bubbles */
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            border-radius: 50%;
+            animation: rise linear infinite;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.5); opacity: 0.5; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🌊 Underwater Image Enhancement 🐠</h1>
+    <p>Upload your underwater image to enhance clarity, color, and visibility!</p>
+
+    <div class="upload-box">
+        <form action="/enhance" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <br>
+            <button type="submit">✨ Enhance Image ✨</button>
+        </form>
+    </div>
+
+    <!-- Floating bubbles -->
+    <script>
+        const numBubbles = 30; // more bubbles for a lively effect
+        const colors = ['#00f0ff', '#66d9ff', '#99e6ff', '#33ccff', '#0099ff'];
+
+        for(let i=0; i<numBubbles; i++){
+            let bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+
+            // Random size
+            let size = Math.random() * 20 + 10;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+
+            // Random left position
+            bubble.style.left = Math.random() * 100 + 'vw';
+
+            // Random color and opacity
+            bubble.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            bubble.style.opacity = (Math.random() * 0.5 + 0.3);
+
+            // Random animation duration and delay
+            bubble.style.animationDuration = (5 + Math.random() * 10) + 's';
+            bubble.style.animationDelay = Math.random() * 10 + 's';
+
+            document.body.appendChild(bubble);
+        }
+    </script>
+</body>
+</html>
